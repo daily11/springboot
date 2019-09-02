@@ -1,5 +1,6 @@
 package com.swust.springboot.controller;
 
+import com.swust.springboot.aop.DemoAnnotationService;
 import com.swust.springboot.entity.BookDO;
 import com.swust.springboot.service.BookService;
 import com.swust.springboot.utils.CODE;
@@ -14,6 +15,8 @@ public class BookController {
 
     @Autowired
     private BookService bookService;
+    @Autowired
+    private DemoAnnotationService demoAnnotationService;
 
     /**
      * 查询书记录
@@ -25,6 +28,7 @@ public class BookController {
     private Result selectByName(String name) {
         try {
             BookDO book = bookService.selectByName(name);
+            demoAnnotationService.add();
             return new Result(CODE.SUCCESS, book, "查询成功！");
         } catch (Exception ex) {
             ex.printStackTrace();
