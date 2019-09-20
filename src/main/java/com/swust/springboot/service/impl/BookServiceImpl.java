@@ -6,10 +6,18 @@ import com.swust.springboot.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Map;
+
 @Service
 public class BookServiceImpl implements BookService {
     @Autowired
     private BookDao bookDao;
+
+    @Override
+    public List<Map> selectByIdReturnMap() {
+        return bookDao.selectByIdReturnMap();
+    }
 
     /**
      * 查询书记录

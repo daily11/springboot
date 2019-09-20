@@ -3,7 +3,12 @@ package com.swust.springboot.service;
 import com.swust.springboot.entity.BookDO;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+import java.util.Map;
+
 public interface BookService {
+
+    List<Map> selectByIdReturnMap();
 
     /**
      * 查询书记录

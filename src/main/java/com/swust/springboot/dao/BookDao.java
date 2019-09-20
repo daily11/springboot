@@ -5,6 +5,9 @@ import com.swust.springboot.entity.BookDO;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+import java.util.Map;
+
 @Repository
 public interface BookDao {
 
@@ -15,6 +18,14 @@ public interface BookDao {
      * @return
      */
     BookDO selectByName(@Param("bookName") String name);
+
+    /**
+     * 查询书记录
+     * 以map形式返回
+     *
+     * @return
+     */
+    List<Map> selectByIdReturnMap();
 
     /**
      * 查询书记录

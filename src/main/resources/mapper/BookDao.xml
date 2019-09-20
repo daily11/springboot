@@ -15,16 +15,25 @@
     </sql>
 
     <!--查询书记录-->
-    <select id="selectById" resultType="com.swust.springboot.entity.BookDO">
+    <select id="selectById" parameterType="long" resultType="com.swust.springboot.entity.BookDO">
         SELECT
-        *
+        -- * 直接写一个*，返回的gmtCreate与gmtModified都为null！要如下方一样显示的as一下别名，映射成我们自定义的dao类！
+        id,name,gmt_create as gmtCreate,gmt_modified as gmtModified
         FROM
         book
         WHERE id = #{bookId}
     </select>
 
+    <!--查询书记录  返回Map形式-->
+    <select id="selectByIdReturnMap" resultType="map">
+    SELECT
+    *
+    FROM
+    book
+    </select>
+
     <!--查询书记录-->
-    <select id="selectByName" resultMap="BaseResultMap">
+    <select id="selectByName" parameterType="string" resultMap="BaseResultMap">
         SELECT
         <include refid="book_column"/>
         FROM

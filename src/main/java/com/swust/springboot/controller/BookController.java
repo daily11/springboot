@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+import java.util.Map;
+
 @RestController
 public class BookController {
 
@@ -17,6 +20,14 @@ public class BookController {
     private BookService bookService;
     @Autowired
     private DemoAnnotationService demoAnnotationService;
+
+    @RequestMapping(value = "/selectByIdReturnMap", method = RequestMethod.POST)
+    private Result selectByIdReturnMap() {
+        List<Map> list = bookService.selectByIdReturnMap();
+        System.out.println(list.toString());
+        return new Result(CODE.SUCCESS, list, "success");
+    }
+
 
     /**
      * 查询书记录
@@ -96,7 +107,7 @@ public class BookController {
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     private Result update(BookDO bookDO) {
         try {
-            System.out.println("客户端上传--->"+bookDO.toString());
+            System.out.println("客户端上传--->" + bookDO.toString());
             Integer num = bookService.update(bookDO);
             return new Result(CODE.SUCCESS, num, "查询成功！");
         } catch (Exception ex) {
