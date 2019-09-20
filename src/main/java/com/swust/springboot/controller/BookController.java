@@ -96,6 +96,7 @@ public class BookController {
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     private Result update(BookDO bookDO) {
         try {
+            System.out.println("客户端上传--->"+bookDO.toString());
             Integer num = bookService.update(bookDO);
             return new Result(CODE.SUCCESS, num, "查询成功！");
         } catch (Exception ex) {

@@ -10,23 +10,34 @@
         <result property="gmtModified" column="gmt_modified"/>
     </resultMap>
 
-    <!--查询书记录-->
-    <select id="selectByName" resultMap="BaseResultMap">
-        SELECT
-        *
-        FROM
-        book
-        WHERE name = #{bookName}
-    </select>
+    <sql id="book_column">
+        id,name,gmt_create,gmt_modified
+    </sql>
 
     <!--查询书记录-->
-    <select id="selectById" resultMap="BaseResultMap">
+    <select id="selectById" resultType="com.swust.springboot.entity.BookDO">
         SELECT
         *
         FROM
         book
         WHERE id = #{bookId}
     </select>
+
+    <!--查询书记录-->
+    <select id="selectByName" resultMap="BaseResultMap">
+        SELECT
+        <include refid="book_column"/>
+        FROM
+        book
+        WHERE name = #{bookName}
+    </select>
+    <!--<select id="selectByName" resultMap="BaseResultMap">-->
+    <!--SELECT-->
+    <!--*-->
+    <!--FROM-->
+    <!--book-->
+    <!--WHERE name = #{bookName}-->
+    <!--</select>-->
 
     <!--删除书记录-->
     <delete id="deleteById">
@@ -36,11 +47,14 @@
     <!--插入书记录-->
     <insert id="insert">
         INSERT INTO book(
-        <if test="name != null and name != ''">name,</if>
+        name,
         gmt_create,
         gmt_modified )
         VALUES (
-        <if test="name != null and name != ''">#{name},</if>
+        <if test="name != null and name != ''">
+            #{name},
+        </if>
+        -- sysdate()适用于mysql数据库
         sysdate(),
         sysdate() )
     </insert>
@@ -49,17 +63,22 @@
     <update id="update">
         update book
         <set>
-            <if test="name != null and name != ''">name=#{name},</if>
+            <if test="name != null and name != ''">
+                name=#{name},
+            </if>
             gmt_modified = sysdate()
         </set>
+        <!--<where>相当于where语句，会自动删除下面跟着的第一个and，只有后面包含有if等语句才需要<>符号包起来-->
         <where>
-            <if test="id != null">
+            <if test="id != null and id != ''">
                 and id = #{id}
             </if>
         </where>
     </update>
 
-    <!-- 根据实际情况选择分页查询条件 -->
+    <!-- 根据实际情况选择分页查询条件
+        下面的相当于：where id=#{id} and name=#{name} and gmt_create=#{gmtCreate} and gmt_modified=#{gmtModified}
+    -->
     <sql id="findPage_where">
         <where>
             <if test="id != null">
