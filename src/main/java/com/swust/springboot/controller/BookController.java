@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 @RestController
 public class BookController {
@@ -24,7 +25,13 @@ public class BookController {
     @RequestMapping(value = "/selectByIdReturnMap", method = RequestMethod.POST)
     private Result selectByIdReturnMap() {
         List<Map> list = bookService.selectByIdReturnMap();
-        System.out.println(list.toString());
+//        System.out.println(list.toString());
+        for(Map map : list){
+            System.out.println("------>"+map.toString());
+            for(Object key: map.keySet()){
+                System.out.println("key="+key+" ,value="+map.get(key));
+            }
+        }
         return new Result(CODE.SUCCESS, list, "success");
     }
 

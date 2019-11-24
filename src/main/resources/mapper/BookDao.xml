@@ -55,17 +55,29 @@
 
     <!--插入书记录-->
     <insert id="insert">
-        INSERT INTO book(
-        name,
-        gmt_create,
-        gmt_modified )
-        VALUES (
-        <if test="name != null and name != ''">
-            #{name},
-        </if>
-        -- sysdate()适用于mysql数据库
-        sysdate(),
-        sysdate() )
+        INSERT INTO book
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="gmtCreate != null">
+                gmt_create,
+            </if>
+            <if test="gmtModified != null">
+                gmt_modified,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+        </trim>
+        <trim prefix="VALUES (" suffix=")" suffixOverrides=",">
+            <if test="gmtCreate != null ">
+                #{gmtCreate},
+            </if>
+            <if test="gmtModified != null">
+                #{gmtModified},
+            </if>
+            <if test="name != null and name != ''">
+                #{name},
+            </if>
+        </trim>
     </insert>
 
     <!--更新书记录-->
