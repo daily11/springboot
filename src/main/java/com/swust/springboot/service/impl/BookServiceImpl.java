@@ -5,9 +5,9 @@ import com.swust.springboot.entity.BookDO;
 import com.swust.springboot.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class BookServiceImpl implements BookService {
@@ -72,5 +72,18 @@ public class BookServiceImpl implements BookService {
     @Override
     public Integer update(BookDO book) {
         return bookDao.update(book);
+    }
+
+    /**
+     * 事务管理测试
+     */
+    @Transactional(rollbackFor = RuntimeException.class)
+    @Override
+    public void transaction() throws Exception {
+        BookDO book = new BookDO();
+        book.setName("yang");
+        insert(book);
+
+        Integer.parseInt("hh");
     }
 }

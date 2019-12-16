@@ -49,4 +49,9 @@ public interface BookService {
      * @return
      */
     Integer update(BookDO book);
+
+    /**
+     * 事务管理测试
+     */
+    void transaction() throws Exception;
 }

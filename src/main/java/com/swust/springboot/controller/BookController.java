@@ -10,9 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 @RestController
 public class BookController {
@@ -26,10 +24,10 @@ public class BookController {
     private Result selectByIdReturnMap() {
         List<Map> list = bookService.selectByIdReturnMap();
 //        System.out.println(list.toString());
-        for(Map map : list){
-            System.out.println("------>"+map.toString());
-            for(Object key: map.keySet()){
-                System.out.println("key="+key+" ,value="+map.get(key));
+        for (Map map : list) {
+            System.out.println("------>" + map.toString());
+            for (Object key : map.keySet()) {
+                System.out.println("key=" + key + " ,value=" + map.get(key));
             }
         }
         return new Result(CODE.SUCCESS, list, "success");
@@ -122,4 +120,16 @@ public class BookController {
             return new Result(CODE.ERROR, null, "查询失败！");
         }
     }
+
+    @RequestMapping(value = "/transaction", method = RequestMethod.POST)
+    private Result transaction() {
+        try {
+            bookService.transaction();
+            return new Result(CODE.SUCCESS, null, "查询成功！");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Result(CODE.SUCCESS, null, "查询失败！");
+        }
+    }
+
 }
