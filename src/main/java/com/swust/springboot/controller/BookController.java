@@ -42,6 +42,7 @@ public class BookController {
      */
     @RequestMapping(value = "/selectByName", method = RequestMethod.POST)
     private Result selectByName(String name) {
+        System.out.println("name--->" + name);
         try {
             BookDO book = bookService.selectByName(name);
             demoAnnotationService.add();
